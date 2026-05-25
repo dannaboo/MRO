@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744264233887",
+    "project_id": "mro-damage-system",
+    "storage_bucket": "mro-damage-system.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744264233887:android:1ff9e61bd4c9be448bc3aa",
+        "android_client_info": {
+          "package_name": "com.mroam.mro_damage_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDInK5DeD8sD5Z4YxOg7vKhTCMzgoP5AY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
