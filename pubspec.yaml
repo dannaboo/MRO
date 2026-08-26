@@ -18,7 +18,7 @@ dependencies:
   firebase_core: ^4.9.0           # Núcleo de Firebase (siempre necesario)
   firebase_auth: ^6.5.1           # Autenticación (login/logout)
   cloud_firestore: ^6.4.1         # Base de datos Firestore
-  firebase_storage: ^13.4.1       # Almacenamiento de fotos
+ # firebase_storage: ^13.4.1       # Almacenamiento de fotos
  # cloud_functions: ^6.3.1         # Funciones en la nube
 
   # ═══════════════════════════════════════════════
