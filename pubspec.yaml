@@ -15,12 +15,13 @@ dependencies:
   # ═══════════════════════════════════════════════
   # FIREBASE — Backend completo
   # ═══════════════════════════════════════════════
-  firebase_core: ^4.9.0           # Núcleo de Firebase (siempre necesario)
-  firebase_auth: ^6.5.1           # Autenticación (login/logout)
-  cloud_firestore: ^6.4.1         # Base de datos Firestore
-  firebase_storage: ^13.4.1       # Almacenamiento de fotos
- # cloud_functions: ^6.3.1         # Funciones en la nube
-
+  # En la sección dependencies, reemplaza SOLO las versiones de Firebase:
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.2
+  cloud_firestore: ^5.5.0
+  firebase_storage: ^12.3.7
+  cloud_functions: ^5.2.0
+  cupertino_icons: ^1.0.8
   # ═══════════════════════════════════════════════
   # ESTADO — Riverpod para manejo de estado
   # ═══════════════════════════════════════════════
