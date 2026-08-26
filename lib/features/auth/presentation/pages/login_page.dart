@@ -1,6 +1,4 @@
 // lib/features/auth/presentation/pages/login_page.dart
-//
-// ¿Qué hace este archivo?
 // Pantalla de inicio de sesión del sistema MRO.
 // Diseñada para trabajo profesional:
 // - Alto contraste para luz solar
@@ -69,35 +67,39 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     // Listener para reaccionar a cambios de estado SIN reconstruir.
     // Ideal para navegación y mostrar SnackBars.
-    ref.listen<AuthState>(authProvider, (previous, next) {
-      if (next.status == AuthStatus.authenticated) {
-        // Login exitoso → navegar al home
-        context.go('/home');
-      } else if (next.status == AuthStatus.error && next.errorMessage != null) {
-        // Error → mostrar mensaje
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                const Icon(Icons.error_outline, color: Colors.white),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    next.errorMessage!,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
+   ref.listen<AuthState>(authProvider, (previous, next) {
+  if (next.status == AuthStatus.authenticated) {
+    // Navegar según el rol del usuario
+    final user = ref.read(currentUserProvider);
+    if (user?.role.canViewDashboard == true) {
+      context.go('/admin');
+    } else {
+      context.go('/reports');
+    }
+  } else if (next.status == AuthStatus.error &&
+      next.errorMessage != null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                next.errorMessage!,
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
-            backgroundColor: AppColors.error,
-            behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 4),
-          ),
-        );
-        // Limpiar el error después de mostrarlo
-        ref.read(authProvider.notifier).clearError();
-      }
-    });
+          ],
+        ),
+        backgroundColor: AppColors.error,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 4),
+      ),
+    );
+    ref.read(authProvider.notifier).clearError();
+  }
+});
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -153,7 +155,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.3),
+                color: AppColors.primary.withValues(alpha: 0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
@@ -346,7 +348,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   .read(authRepositoryProvider)
                   .sendPasswordResetEmail(email: emailController.text.trim());
 
-              if (mounted) {
+              if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Revisa tu correo para restablecer la contraseña'),

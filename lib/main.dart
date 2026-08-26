@@ -10,8 +10,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+
 
 import 'core/theme/app_theme.dart';
 import 'core/router/app_router.dart';
@@ -22,35 +25,37 @@ import 'firebase_options.dart';
 // antes de mostrar cualquier pantalla.
 Future<void> main() async {
   // Asegura que Flutter esté listo para usar plugins nativos
-  // antes de inicializar Firebase.
   WidgetsFlutterBinding.ensureInitialized();
 
   // Forzar orientación vertical (portrait) en móvil.
-  // Las cuadrillas trabajan con el teléfono vertical.
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  // Inicializar Firebase con la configuración generada por FlutterFire CLI.
-  // DefaultFirebaseOptions.currentPlatform detecta automáticamente
-  // si estamos en Android, iOS o Web y usa la config correcta.
+  // Inicializar Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   // Inicializar Hive (base de datos local para modo offline).
-  // initFlutter() configura Hive para usar el directorio
-  // de documentos del dispositivo automáticamente.
   await Hive.initFlutter();
 
-  // Iniciar la aplicación envuelta en ProviderScope.
-  // ProviderScope es el contenedor global de Riverpod.
-  // DEBE ser el widget raíz para que todos los providers
-  // funcionen en toda la app.
+  // 1. Creamos el contenedor de Riverpod explícitamente
+  final container = ProviderContainer();
+
+  // 2. Forzamos la lectura de tu SyncProvider para que se active e inicie
+  // (Asegúrate de importar aquí el archivo donde declaraste tu provider de sync)
+  // Reemplaza 'syncProvider' por el nombre exacto de tu variable global del provider.
+
+
+  Intl.defaultLocale = 'es_MX';
+
+  // 3. Pasamos el contenedor inicializado usando UncontrolledProviderScope
   runApp(
-    const ProviderScope(
-      child: MROApp(),
+    UncontrolledProviderScope(
+      container: container,
+      child: const MROApp(),
     ),
   );
 }
@@ -79,7 +84,7 @@ class MROApp extends ConsumerWidget {
 
       // Configuración de localización para español de México
       localizationsDelegates: const [
-        // GlobalMaterialLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
         // GlobalWidgetsLocalizations.delegate,
         // GlobalCupertinoLocalizations.delegate,
       ],

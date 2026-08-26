@@ -22,7 +22,20 @@ enum UserRole {
   supervisor,   // Supervisor de cuadrilla
   analyst,      // Analista de oficina
   admin,        // Administrador del sistema
-  manager,      // Gerente (solo lectura)
+  manager;      // Gerente (solo lectura)
+
+bool get canReviewReports =>
+      this == UserRole.analyst ||
+      this == UserRole.admin ||
+      this == UserRole.manager;
+      // Dentro de extension UserRoleExtension on UserRole
+// Busca los getters de permisos que ya existen y AGREGA este:
+
+bool get canViewDashboard =>
+    this == UserRole.analyst ||
+    this == UserRole.admin ||
+    this == UserRole.manager;
+      
 }
 
 // Extensión que agrega utilidades al enum UserRole.
@@ -43,6 +56,7 @@ extension UserRoleExtension on UserRole {
         return 'admin';
       case UserRole.manager:
         return 'manager';
+
     }
   }
 
@@ -99,6 +113,7 @@ extension UserRoleExtension on UserRole {
 
   bool get canManageUsers =>
       this == UserRole.admin;
+      
 
   bool get canViewDashboard =>
       this == UserRole.analyst ||
