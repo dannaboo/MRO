@@ -43,7 +43,7 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools.build:desugaring:2.0.4")
+    coreLibraryDesugaring("com.android.tools.build:desugaring:2.1.5")
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
